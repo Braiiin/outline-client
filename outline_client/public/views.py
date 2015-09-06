@@ -31,13 +31,12 @@ def anonymous_required(f):
 def load_user(access_token):
     """Loading a user from saved userId"""
     session = Session(access_token=access_token).get()
-    user = User(id=session.user, access_token=access_token).get()
-    session.user = user
-    if user.is_active():
-        return user
-    else:
-        return None
-
+    if session:
+        user = User(id=session.user, access_token=access_token).get()
+        session.user = user
+        if user.is_active():
+            return user
+    return None
 
 @login_manager.unauthorized_handler
 def unauthorized():

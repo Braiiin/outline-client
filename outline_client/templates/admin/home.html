@@ -1,1 +1,7 @@
 Welcome the admin panel, {{ current_user.name }}. <a href="{{ url_for('public.logout') }}">logout</a>
+
+<a href="{{ url_for('admin.outline_create') }}">Create Outline</a>
+
+{% for outline in outlines %}
+<li><a href="{{ url_for('admin.outline_detail', outlineId=outline.id) }}">{{ outline.title }}</a> (<a href="{{ url_for('admin.outline_edit', outlineId=outline.id) }}">edit</a>) (<a href="{{ url_for('admin.outline_delete', outlineId=outline.id) }}">delete</a>)</li>
+{% endfor %}

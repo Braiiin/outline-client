@@ -1,33 +1,60 @@
-from flask import Blueprint, render_template
-from flask_login import login_required
+from flask import Blueprint, render_template, request, redirect, url_for, \
+    jsonify
+from flask_login import login_required, current_user
+from outline_client.libs.outline import Outline
+from .forms import AddOutlineForm, EditOutlineForm
 
-# setup Blueprint
+# setup admin
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 @admin.route('/')
 @login_required
 def home():
-	"""Admin panel home"""
-	return render_template('admin/home.html')
+    """Admin panel home"""
+    outlines = Outline().fetch()
+    return render_template('admin/home.html', outlines=outlines)
 
 
-@admin.route('/outline/create')
+@admin.route('/outline/create', methods=['POST', 'GET'])
 @login_required
-def create():
-	"""Add a new outline"""
-	return render_template('form.html')
+def outline_create():
+    """Add a new outline"""
+    form = AddOutlineForm(author=current_user.id)
+    if request.method == 'POST':
+        outline = Outline(**request.form).post()
+        return redirect(url_for('admin.home'))
+    return render_template('form.html', **locals())
 
 
-@admin.route('/outline/<string:outlineId>/edit')
+@admin.route('/outline/<string:outlineId>/edit', methods=['POST', 'GET'])
 @login_required
-def edit(outlineId):
-	"""Edit an outline"""
-	return render_template('form.html')
+def outline_edit(outlineId):
+    """Edit an outline"""
+    outline = Outline(id=outlineId).get()
+    form = EditOutlineForm(**outline._data)
+    if request.method == 'POST':
+        outline.created_at = outline.updated_at = None
+        outline.load(**request.form).put()
+        return redirect(url_for('admin.home'))
+    return render_template('form.html', **locals())
 
 
-@admin.route('/outline/<string:outlineId>/delete')
+@admin.route('/outline/<string:outlineId>/delete', methods=['POST', 'GET'])
 @login_required
-def delete(outlineId):
-	"""Delete an outline"""
-	return render_template('confirm.html')
+def outline_delete(outlineId):
+    """Delete an outline"""
+    outline = Outline(id=outlineId).get()
+    if request.method == 'POST':
+        outline.delete()
+        return 'Successfully deleted outline "%s"' % outline.title
+    return render_template('admin/confirm.html',
+        cancel=url_for('admin.outline_edit', outlineId=outlineId))
+
+
+@admin.route('/outline/<string:outlineId>')
+@login_required
+def outline_detail(outlineId):
+    """Detail view for an outline"""
+    outline = Outline(id=outlineId).get()
+    return jsonify(outline._data)

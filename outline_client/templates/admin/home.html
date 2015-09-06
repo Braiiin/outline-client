@@ -1,2 +1,1 @@
-<a href="{{ url_for('public.login') }}">login</a>
-<a href="{{ url_for('public.register') }}">register</a>
+Welcome the admin panel, {{ current_user.name }}. <a href="{{ url_for('public.logout') }}">logout</a>

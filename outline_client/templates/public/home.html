@@ -1,5 +1,7 @@
 {% extends "public/base.html" %}
 
+{% set page='home' %}
+
 {% block main %}
 <div class="col-md-2"></div>
 <form class="landing-center col-md-8" action="{{ url_for('public.search')}}">

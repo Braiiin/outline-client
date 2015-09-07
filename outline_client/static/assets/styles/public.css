@@ -5,6 +5,9 @@
     font-family:'Roboto';
     float:left;
 }
+body, html,main,h1 {
+    min-width:100%;
+}
 .landing-search,.button,.landing-subtext {
     transition:         0.2s ease;
     -webkit-transition: 0.2s ease;
@@ -17,7 +20,7 @@ body *[class*="col-"] {
 }
 .landing-center {
     text-align:center;
-    margin-top:10em;
+    margin-top:5em;
 }
     .landing-center > * {
         margin-bottom:1em;
@@ -39,7 +42,7 @@ body *[class*="col-"] {
 .landing-search,.psearchb-input {
     border:none;
     border-bottom:1px solid #ccc;
-    background-color:#f6f6f6;
+    background-color:#fefefe;
     outline:none;
     padding:0.1em;
 }
@@ -88,24 +91,16 @@ body *[class*="col-"] {
         border-bottom:1px solid #666;
         text-decoration:none;
     }
-.panel {
-    margin-top:5em;
+div.panel {
+    margin-top:3em;
+    box-shadow:none;
 }
     .panel-text {
         color:#999;
         margin-top:1em;
     }
-    .tag {
-        padding:0.25em 0.5em;
-        border:2px solid #fbb03b;
-        text-transform:uppercase;
-        font-size:0.6em;
-        color:#fbb03b;
-        margin-right:0.5em;
-        font-weight:600;
-    }
 .panel .psearchb-input {
-    font-size:1.75em;
+    font-size:2em;
     font-weight:300;
     padding:0.25em;
 }
@@ -115,6 +110,7 @@ body *[class*="col-"] {
     }
     .psearch-result {
         margin-top:2.5em;
+        width:100%;
     }
     .psearchr-title {
         font-weight:300;
@@ -123,13 +119,36 @@ body *[class*="col-"] {
         width:100%;
         font-size:2em;
     }
-    div.panel {
-        box-shadow:none;
-    }
     .psearchr-text {
         color:#999;
+        margin:5px 0;
     }
         .psearchr-text .fa {
             margin-right:0.2em;
             line-height:1.5em;
         }
+header {
+    padding:2em 3em;
+    width:100%;
+}
+    header a {
+        text-transform:uppercase;
+        color:#999;
+        font-family:'PT Sans Caption';
+        padding:0.5em 1em;
+        display:inline-block;
+    }
+        header a:hover {
+            background-color:#f6f6f6;
+            color:#333;
+            text-decoration:none;
+        }
+    header nav {
+        float:right;
+    }
+.header-logo {
+    width:2em;
+}
+.content h1 {
+    font-weight:300;
+}

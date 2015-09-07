@@ -86,11 +86,20 @@ def register():
         '{}/register'.format(current_app.config['CORE_URI']),
         next=request.url)
 
+
 @public.route('/search')
-@anonymous_required
 def search():
     """Searches by content"""
-    outlines = Outline(content=request.form.get('query')).fetch()
+    outlines = Outline().fetch()
     return render_template('public/search.html',
-        outlines=dict(results=outlines),
-        current_user=current_user)
+        outlines=outlines,
+        current_user=current_user,
+        query=request.args.get('query'))
+
+
+@public.route('/outline/<string:outlineId>')
+def outline(outlineId):
+    """Detail view for an outline"""
+    outline = Outline(id=outlineId).get()
+    outline.content = outline.content.replace('\n', '<br>\n')
+    return render_template('public/outline.html', outline=outline)

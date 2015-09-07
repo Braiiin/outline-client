@@ -50,11 +50,3 @@ def outline_delete(outlineId):
         return 'Successfully deleted outline "%s"' % outline.title
     return render_template('admin/confirm.html',
         cancel=url_for('admin.outline_edit', outlineId=outlineId))
-
-
-@admin.route('/outline/<string:outlineId>')
-@login_required
-def outline_detail(outlineId):
-    """Detail view for an outline"""
-    outline = Outline(id=outlineId).get()
-    return jsonify(outline._data)

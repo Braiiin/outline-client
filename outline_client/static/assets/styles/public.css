@@ -91,6 +91,11 @@ body *[class*="col-"] {
         border-bottom:1px solid #666;
         text-decoration:none;
     }
+    .landing-text {
+        color:#999;
+        margin-top:-1em;
+        margin-bottom:2em;
+    }
 div.panel {
     margin-top:3em;
     box-shadow:none;

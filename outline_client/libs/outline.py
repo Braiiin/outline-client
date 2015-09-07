@@ -4,6 +4,9 @@ from roman import toRoman, fromRoman
 class Outline(Entity):
     """Sample object"""
 
+    def search(self, query):
+        return self.call('get', func='search', data={'query': query})
+
     def format_content(self):
         """Format content
         assumes that heading types do not repeat"""
@@ -11,21 +14,26 @@ class Outline(Entity):
         html = ''
         headings, depth, numbering = [None], 0, {0: 0}
         for line in lines:
-            words, current_heading = line.strip().split(), headings[-1]
-            heading, words = self.typeof(
-                words[0], numbering.get(depth, 0)), words[1:]
-            if heading != current_heading:
-                if heading in headings:
-                    depth = headings.index(heading)
-                    headings = headings[:depth+1]
-                    current_heading = heading
-                else:
-                    depth += 1
-                    current_heading = heading
-                    headings.append(heading)
-                    numbering[depth] = 0
-            numbering[depth] += 1
-            html += '&nbsp;'*((depth-1)*4) + self.translate(heading, numbering[depth]) + heading[2] + ' ' +' '.join(words) + '<br>\n'
+            words, current_heading = line.strip().split(' '), headings[-1]
+            if words and words[0]:
+                heading, words = self.typeof(
+                    words[0], numbering.get(depth, 0)), words[1:]
+                if heading != current_heading:
+                    if heading in headings:
+                        depth = headings.index(heading)
+                        headings = headings[:depth+1]
+                        current_heading = heading
+                    else:
+                        depth += 1
+                        current_heading = heading
+                        headings.append(heading)
+                        numbering[depth] = 0
+                numbering[depth] += 1
+                html += '&nbsp;'*((depth-1)*4) \
+                    + self.translate(heading, numbering[depth]) \
+                    + heading[2] + ' ' +' '.join(words) + '<br>\n'
+            else:
+                html += '<br>\n'
         self.html = html
         return self
 
@@ -39,6 +47,8 @@ class Outline(Entity):
         ('number', None, '.')
         ('roman numeral', 'upper', ')')
         """
+        if not string:
+            return (None, None, None)
         delimiter, string = string[-1], string[:-1]
         try:
             i = int(string)

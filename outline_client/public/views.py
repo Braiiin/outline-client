@@ -90,8 +90,9 @@ def register():
 @public.route('/search')
 def search():
     """Searches by content"""
-    outlines = [Outline(**data) for data in
-        Outline(title=request.args.get('query')).fetch()]
+    outlines = Outline().search(request.args.get('query'))
+    if outlines:
+        outlines = [Outline(**data) for data in outlines]
     return render_template('public/search.html',
         outlines=outlines,
         current_user=current_user,

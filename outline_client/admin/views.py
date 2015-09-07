@@ -32,6 +32,7 @@ def outline_create():
 def outline_edit(outlineId):
     """Edit an outline"""
     outline = Outline(id=outlineId).get()
+    outline.hashtags = ', '.join(['#'+h for h in outline.hashtags])
     form = EditOutlineForm(**outline._data)
     if request.method == 'POST':
         outline.created_at = outline.updated_at = None

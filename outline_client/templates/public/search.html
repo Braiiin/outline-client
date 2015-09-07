@@ -9,14 +9,20 @@
             <input class="button small col-md-12" type="submit" value="">
         </div>
     </form>
-    <p class="panel-text">search results for {{ query }}</p>
+    <p class="panel-text">Type above to search by title. Precede by a pound sign to search by hashtag. You may combine search terms and hashtags, by separating each with spaces.</p>
+    {% if outlines %}
     {% for outline in outlines %}
-    <a class="psearch-result" href="{{ url_for('public.outline', outlineId=outline.id) }}">
+    <div class="psearch-result">
         <p class="psearchr-text"><i class="fa fa-clock-o"></i>{{ outline.time }}m read</p>
-        <h2 class="psearchr-title">{{ outline.title }}</h2>
-        <p class="psearchr-text">#text, #text</p>
-    </a>
+        <h2 class="psearchr-title"><a href="{{ url_for('public.outline', outlineId=outline.id) }}">{{ outline.title }}</a></h2>
+        <p class="psearchr-text">
+            {% for hashtag in outline.hashtags %}
+            <a href="{{ url_for('public.search', query='#'+hashtag) }}">#{{ hashtag }}</a>
+            {% endfor %}
+        </p>
+    </div>
     {% endfor %}
+    {% endif %}
 </div>
 <div class="col-md-4"></div>
 {% endblock %}

@@ -1,0 +1,135 @@
+* {
+    margin:0;
+    padding:0;
+    position:relative;
+    font-family:'Roboto';
+    float:left;
+}
+.landing-search,.button,.landing-subtext {
+    transition:         0.2s ease;
+    -webkit-transition: 0.2s ease;
+    -moz-transition:    0.2s ease;
+    -o-transition:      0.2s ease;
+}
+body *[class*="col-"] {
+    padding-right:0;
+    padding-left:0;
+}
+.landing-center {
+    text-align:center;
+    margin-top:10em;
+}
+    .landing-center > * {
+        margin-bottom:1em;
+    }
+    .landing-center .button,.landing-subtext {
+        float:none;
+    }
+.landing-title,.landing-search {
+    text-align:center;
+    width:100%;
+    font-size:2.5em;
+    font-weight:300;
+}
+.landing-logo {
+    width:3.5em;
+    display:inline-block;
+    float:none
+}
+.landing-search,.psearchb-input {
+    border:none;
+    border-bottom:1px solid #ccc;
+    background-color:#f6f6f6;
+    outline:none;
+    padding:0.1em;
+}
+    .landing-search:focus,.psearchb-input:focus {
+        border-bottom:1px solid #fbb03b;
+        background-color:rgba(255,255,0,0.1);
+    }
+.button {
+    text-transform:uppercase;
+    color:#000;
+    border:3px solid #000;
+    font-family:'PT Sans Caption';
+    background-color:#FFF;
+    padding:1.25em 3em;
+    font-size:0.875em;
+}
+    .button:hover,.button.small:hover {
+        background-color:#000;
+        color:#FFF;
+    }
+        .button.small:hover {
+            background-color: transparent;
+        }
+    .button.small {
+        padding:0.5em 2em;
+        background-color:transparent;
+    }
+    .psearchb-icon {
+        position:absolute;
+        margin-top:0.65em;
+        left:50%;
+        margin-left:-0.5em;
+    }
+.landing-subtext {
+    color:#999;
+    border-bottom:1px dotted #999;
+    display:inline-block;
+    float:none;
+}
+    .clearfix {
+        width:100%;
+        text-align:center;
+    }
+    .landing-subtext:hover {
+        color:#666;
+        border-bottom:1px solid #666;
+        text-decoration:none;
+    }
+.panel {
+    margin-top:5em;
+}
+    .panel-text {
+        color:#999;
+        margin-top:1em;
+    }
+    .tag {
+        padding:0.25em 0.5em;
+        border:2px solid #fbb03b;
+        text-transform:uppercase;
+        font-size:0.6em;
+        color:#fbb03b;
+        margin-right:0.5em;
+        font-weight:600;
+    }
+.panel .psearchb-input {
+    font-size:1.75em;
+    font-weight:300;
+    padding:0.25em;
+}
+    .panel .psearchb-button {
+        float:right;
+        margin-top:0.5em;
+    }
+    .psearch-result {
+        margin-top:2.5em;
+    }
+    .psearchr-title {
+        font-weight:300;
+        color:#000;
+        margin:0;
+        width:100%;
+        font-size:2em;
+    }
+    div.panel {
+        box-shadow:none;
+    }
+    .psearchr-text {
+        color:#999;
+    }
+        .psearchr-text .fa {
+            margin-right:0.2em;
+            line-height:1.5em;
+        }

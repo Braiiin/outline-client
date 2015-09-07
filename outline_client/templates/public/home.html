@@ -1,4 +1,10 @@
+{% extends "public/base.html" %}
+
+{% block header %}
 <a href="{{ url_for('public.login') }}">login</a>
 <a href="{{ url_for('public.register') }}">register</a>
+{% endblock %}
 
+{% block main %}
 {{ outlines }}
+{% endblock %}

@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>{{ title or 'Braiiin Outlines' }}</title>
+        <link href="/static/assets/styles/public.css" rel="stylesheet">
+        {% block head %}
+    </head>
+    <body>
+        {% block content %}
+        <header>
+            {% block header %}
+            {% endblock %}
+        </header>
+        <main>
+            {% block main %}
+            {% endblock %}
+        </main>
+        {% endblock %}
+    </body>
+</html>

@@ -1,6 +1,6 @@
 from flask import jsonify, Blueprint, redirect as flask_redirect, url_for, \
     render_template, request, current_app
-from flask_login import current_user, logout_user
+from flask_login import current_user, logout_user, login_user
 from client.libs.core import User, Session
 from client import login_manager
 import functools
@@ -56,16 +56,19 @@ def logout():
 def home():
     """Displays all outlines"""
     outlines = Outline().fetch()
-    return render_template('public/home.html',
-        outlines=dict(results=outlines))
+    return render_template('public/home.html', current_user=current_user)
 
 
 @public.route('/login')
 @anonymous_required
 def login():
     """Redirects to Braiiin core login"""
-    if request.args.get('access_token', None):
-        pass
+    access_token = request.args.get('access_token', None)
+    if access_token:
+        user = load_user(access_token)
+        if user:
+            login_user(user)
+        return redirect(url_for('admin.home'))
     return redirect(
         '{}/login'.format(current_app.config['CORE_URI']),
         next=request.url)
@@ -75,8 +78,19 @@ def login():
 @anonymous_required
 def register():
     """Redirects to Braiiin core registration"""
-    if request.args.get('access_token', None):
-        pass
+    access_token = request.args.get('access_token', None)
+    if access_token:
+        load_user(access_token)
+        return redirect(url_for('admin.home'))
     return redirect(
         '{}/register'.format(current_app.config['CORE_URI']),
         next=request.url)
+
+@public.route('/search')
+@anonymous_required
+def search():
+    """Searches by content"""
+    outlines = Outline(content=request.form.get('query')).fetch()
+    return render_template('public/search.html',
+        outlines=dict(results=outlines),
+        current_user=current_user)

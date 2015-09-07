@@ -1,10 +1,17 @@
 {% extends "public/base.html" %}
 
-{% block header %}
-<a href="{{ url_for('public.login') }}">login</a>
-<a href="{{ url_for('public.register') }}">register</a>
-{% endblock %}
-
 {% block main %}
-{{ outlines }}
+<div class="col-md-2"></div>
+<form class="landing-center col-md-8" action="{{ url_for('public.search')}}">
+    <img class="landing-logo" src="/static/assets/images/outline_logo.svg">
+    <h1 class="landing-title">What would you like to learn about?</h1>
+    <input class="landing-search" placeholder="type to search" name="query">
+    <span class="clearfix">
+        <input class="button" type="submit" value="Learn More">
+    </span>
+    <span class="clearfix">
+        <!-- <a href="/" class="landing-subtext">back to Braiiin</a> -->
+    </span>
+</form>
+<div class="col-md-2"></div>
 {% endblock %}

@@ -3,7 +3,7 @@
 <div class="col-md-4"></div>
 <div class="col-md-4 panel">
     <form class="psearch-bar col-md-12">
-        <input class="psearchb-input col-md-9" placeholder="type to search" value="{{ query }}">
+        <input class="psearchb-input col-md-9" placeholder="type to search" value="{{ query }}" name="query">
         <div class="col-md-2 psearchb-button">
             <i class="fa fa-search psearchb-icon"></i>
             <input class="button small col-md-12" type="submit" value="">
@@ -12,7 +12,7 @@
     <p class="panel-text">search results for {{ query }}</p>
     {% for outline in outlines %}
     <a class="psearch-result" href="{{ url_for('public.outline', outlineId=outline.id) }}">
-        <p class="psearchr-text"><i class="fa fa-clock-o"></i>5m read</p>
+        <p class="psearchr-text"><i class="fa fa-clock-o"></i>{{ outline.time }}m read</p>
         <h2 class="psearchr-title">{{ outline.title }}</h2>
         <p class="psearchr-text">#text, #text</p>
     </a>

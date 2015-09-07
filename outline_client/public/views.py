@@ -90,7 +90,8 @@ def register():
 @public.route('/search')
 def search():
     """Searches by content"""
-    outlines = Outline().fetch()
+    outlines = [Outline(**data) for data in
+        Outline(title=request.args.get('query')).fetch()]
     return render_template('public/search.html',
         outlines=outlines,
         current_user=current_user,
@@ -100,6 +101,5 @@ def search():
 @public.route('/outline/<string:outlineId>')
 def outline(outlineId):
     """Detail view for an outline"""
-    outline = Outline(id=outlineId).get()
-    outline.content = outline.content.replace('\n', '<br>\n')
+    outline = Outline(id=outlineId).get().format_content()
     return render_template('public/outline.html', outline=outline)

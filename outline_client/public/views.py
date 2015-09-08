@@ -1,7 +1,8 @@
 from flask import jsonify, Blueprint, redirect as flask_redirect, url_for, \
     render_template, request, current_app
-from flask_login import current_user, logout_user, login_user
+from flask_login import current_user, logout_user, login_user, login_required
 from client.libs.core import User, Session
+from client.libs.service import Service, Employment
 from client import login_manager
 import functools
 from outline_client.libs.outline import Outline
@@ -38,6 +39,7 @@ def load_user(access_token):
             return user
     return None
 
+
 @login_manager.unauthorized_handler
 def unauthorized():
     """Where unauthenticated users are sent"""
@@ -48,7 +50,26 @@ def unauthorized():
 def logout():
     """Logout the user"""
     logout_user()
-    return redirect(url_for('public.login'))
+    return redirect(url_for('public.login'), next=request.url)
+
+
+# Employment utilities
+
+def nonemployee_required(f):
+    """Require nonemployee - otherwise, redirect to admin"""
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        service = Service(
+            name='Outline'
+        ).get_or_create()
+        employment = Employment(
+            user=current_user.id,
+            service=service.id
+        ).fetch()
+        if employment:
+            return redirect(url_for('admin.home'))
+        return f(*args, **kwargs)
+    return wrapper
 
 
 # Views
@@ -71,7 +92,7 @@ def login():
         return redirect(url_for('admin.home'))
     return redirect(
         '{}/login'.format(current_app.config['CORE_URI']),
-        next=request.url)
+        next=request.args.get('next', request.url))
 
 
 @public.route('/register')
@@ -104,3 +125,20 @@ def outline(outlineId):
     """Detail view for an outline"""
     outline = Outline(id=outlineId).get().format_content()
     return render_template('public/outline.html', outline=outline)
+
+
+@public.route('/join', methods=['POST', 'GET'])
+@login_required
+@nonemployee_required
+def join():
+    """join staff"""
+    if request.method == 'POST':
+        token = request.form.get('token', None)
+        if token and token in ('wl4325hi32rf', '29sfh3mdo2sa', '2oqeo28djap2'):
+            service = Service(name='Outline').get_or_create()
+            employee = Employment(
+                user=current_user.id,
+                service=service.id).post()
+            return redirect(url_for('admin.home'))
+        message = 'Invalid token.'
+    return render_template('public/join.html', **locals())

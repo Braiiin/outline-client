@@ -1,0 +1,14 @@
+{% extends "public/base.html" %}
+
+{% block main %}
+<div class="col-md-2"></div>
+<form class="landing-center col-md-8" method="post" action="{{ url_for('public.join')}}">
+    <img class="landing-logo" src="/static/assets/images/outline_logo.svg">
+    <h1 class="landing-title">Ready to join Outline staff?</h1>
+    {% if message %}<p class="landing-text">{{ message }}</p>{% endif %}
+    <p class="landing-text">You should have received a pre-approved token. Enter it below:</p>
+    <input class="landing-search" placeholder="token" name="token">
+    <span class="clearfix">
+        <input class="button" type="submit" value="Join">
+    </span>
+{% endblock %}

@@ -95,6 +95,8 @@ body *[class*="col-"] {
         color:#999;
         margin-top:-1em;
         margin-bottom:2em;
+        width:100%;
+        text-align:center;
     }
 div.panel {
     margin-top:3em;

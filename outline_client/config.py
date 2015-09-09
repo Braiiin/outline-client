@@ -27,7 +27,7 @@ class Config:
 
 class ProductionConfig(Config):
     """Production vars"""
-    LOGIC_URI = ''
+    LOGIC_URI = 'http://logic.outline.braiiin.com'
     CORE_URI = 'http://braiiin.com'
 
 

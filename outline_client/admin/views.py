@@ -17,7 +17,7 @@ def employee_required(f):
         service = Service(name='Outline').get_or_create()
         employee = Employment(
             user=current_user.id,
-            service=service.id).fetch()
+            service=service.id).get()
         if not employee:
             return redirect(url_for('public.join'))
         return f(*args, **kwargs)

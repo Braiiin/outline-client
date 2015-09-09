@@ -50,7 +50,7 @@ def unauthorized():
 def logout():
     """Logout the user"""
     logout_user()
-    return redirect(url_for('public.login'), next=request.url)
+    return redirect(url_for('public.login'))
 
 
 # Employment utilities
@@ -65,7 +65,7 @@ def nonemployee_required(f):
         employment = Employment(
             user=current_user.id,
             service=service.id
-        ).fetch()
+        ).get()
         if employment:
             return redirect(url_for('admin.home'))
         return f(*args, **kwargs)

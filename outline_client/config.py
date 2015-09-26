@@ -30,6 +30,11 @@ class ProductionConfig(Config):
     LOGIC_URI = 'http://logic.outline.braiiin.com'
     CORE_URI = 'http://braiiin.com'
 
+    INIT = {
+        'port': 80,
+        'host': '127.0.0.1',
+    }
+
 
 class DevelopmentConfig(Config):
     """For local runs"""
